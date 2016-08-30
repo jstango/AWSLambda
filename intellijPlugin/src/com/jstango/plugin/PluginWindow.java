@@ -20,7 +20,7 @@ public class PluginWindow implements ProjectComponent {
 
     private final Project project;
     public static final String TOOL_WINDOW_ID = "AWS Services Window";
-    private static final Icon icon = IconLoader.getIcon("resources/icons/web_logo.png");
+    private static final Icon icon = IconLoader.getIcon("/icons/web_logo.png");
 
 
     public PluginWindow(Project project) {
@@ -49,14 +49,17 @@ public class PluginWindow implements ProjectComponent {
         ToolWindowManager toolWindowManager = ToolWindowManager.getInstance(project);
         ToolWindow toolWindow = toolWindowManager.registerToolWindow(TOOL_WINDOW_ID, false, ToolWindowAnchor.BOTTOM);
         ContentFactory contentFactory = ContentFactory.SERVICE.getInstance();
-        Content content = contentFactory.createContent(new AWSPluginWindowPanel(),"",false);
+        Content content = contentFactory.createContent(new com.intellij.ui.treeStructure.Tree(),"",false);
         toolWindow.getContentManager().addContent(content);
         toolWindow.setIcon(icon);
-
     }
 
     @Override
     public void projectClosed() {
         // called when project is being closed
+        ToolWindowManager toolWindowManager = ToolWindowManager.getInstance(project);
+        toolWindowManager.unregisterToolWindow(TOOL_WINDOW_ID);
+
     }
+
 }
